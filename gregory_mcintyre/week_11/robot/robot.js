@@ -2,6 +2,8 @@ var robot = robot || {};
 
 robot.initBoard = function(el, cellWidth, window) {
   var robot = {
+    drunk: false,
+
     directionOffset: {
       left: -1,
       right: +1
@@ -70,6 +72,11 @@ robot.initBoard = function(el, cellWidth, window) {
     robotDiv.style.left = robot.position[0] * cellWidth + 'px';
     robotDiv.style.top = robot.position[1] * cellWidth + 'px';
     robotDiv.setAttribute('class', 'robot ' + dirClass[robot.direction]);
+    if (robot.drunk) {
+      robotDiv.style.transitionDuration = '1s';
+    } else {
+      robotDiv.style.transitionDuration = null;
+    }
   };
 
   setInterval(function(){
@@ -82,4 +89,11 @@ robot.initBoard = function(el, cellWidth, window) {
     advanceRobot();
     setRobotPosition();
   }, 200);
+
+  // drunk / sober toggle every 10s
+  setInterval(function(){
+    // click on megaman to inebriate him
+    robot.drunk = !robot.drunk;
+  }, 10000);
+
 };
